@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animate</title>
+    <style>
+        div {
+            background: #1ea7dd;
+            height: 100px;
+            width: 100px;
+            position: relative;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">div-1</div>
+    <div id="div2">div-2</div>
+    <div id="div3">div-3</div>
+    <div id="div4">div-4</div>
+    <div id="div5">div-5</div>
+
+    <button id="btn1">btn-1</button>
+    <button id="btn2">btn-2</button>
+    <button id="btn3">btn-3</button>
+    <button id="btn4">btn-4</button>
+    <button id="btn5">btn-5</button>
+    <button id="btn6" disabled>btn-6</button> <!-- New Button -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function () {
+            let isDiv3Modified = false; // Flag to track if div3 is modified
+
+            $("#btn1").click(function () {
+                $("#div1").animate({ left: '250px' }, 2000);
+            });
+
+            $("#btn2").click(function () {
+                $("#div2").animate({
+                    left: '250px',
+                    opacity: '0.5',
+                    height: '150px',
+                    width: '150px'
+                });
+            });
+
+            $("#btn3").click(function () {
+                $("#div3").animate({
+                    left: '250px',
+                    height: '+=150px',
+                    width: '+=150px'
+                });
+                isDiv3Modified = true; // Mark div3 as modified
+                $("#btn6").prop("disabled", false); // Enable Button 6
+            });
+
+            // Toggle height for div4
+            $("#btn4").click(function () {
+                $("#div4").animate({
+                    height: 'toggle'
+                });
+            });
+
+            // Sequential animations for div5
+            $("#btn5").click(function () {
+                var div = $("#div5");
+                div.animate({ height: '300px', opacity: '0.4' }, "2000");
+                div.animate({ width: '300px', opacity: '0.8' }, "slow");
+                div.animate({ height: '100px', opacity: '0.4' }, "1000");
+                div.animate({ width: '100px', opacity: '0.8' }, "slow");
+            });
+
+            // Button 6: Reset div3 to its original size and position
+            $("#btn6").click(function () {
+                if (isDiv3Modified) {
+                    $("#div3").animate({
+                        left: '0px',
+                        height: '100px',
+                        width: '100px'
+                    }, function () {
+                        isDiv3Modified = false; // Reset the flag
+                        $("#btn6").prop("disabled", true); // Disable Button 6
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
